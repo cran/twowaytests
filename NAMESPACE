@@ -1,0 +1,8 @@
+export(gpTwoWay, descTwoWay, gplotTwoWay, nortestTwoWay, homogtestTwoWay)
+importFrom("stats", complete.cases, model.frame, rchisq, rnorm, rt, var, as.formula, shapiro.test, dnorm, qqline, qqnorm, sd, bartlett.test, fligner.test)
+importFrom("onewaytests", describe)
+importFrom("ggplot2", ggplot, aes, geom_boxplot, geom_point, geom_errorbar, ggtitle, labs, geom_bar, position_dodge)
+importFrom("nortest", sf.test, pearson.test, ad.test, cvm.test, lillie.test)
+importFrom("graphics", curve, hist, par)
+importFrom("car", leveneTest)
+

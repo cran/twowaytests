@@ -1,0 +1,15 @@
+66586afdc97978d898094dc98b05867a *DESCRIPTION
+1e641cf97ca5d3ee964fd44100275f81 *NAMESPACE
+8cf35474d2f5ded5de3371d044e033c0 *R/descTwoWay.R
+44e9adcaa3c522ebe05035f5a7ef64b7 *R/gpTwoWay.R
+566828df5d9bd2dc12c70b99411eec5f *R/gplotTwoWay.R
+71f88029e68436e6118c39662775baa3 *R/homogtestTwoWay.R
+e1cd43437b9fd9108ccaf81e1dfe2ded *R/nortestTwoWay.R
+cee40c96807e56d121447350040ac992 *data/alveolar.rda
+664fb9c79966803d63d6a00c9d221b3e *man/alveolar.Rd
+e3797df66f88297e7c6177be59aa8689 *man/descTwoWay.Rd
+b9c8e7ff2b3fdf50ee3ef187e9580f79 *man/gpTwoWay.Rd
+716c644f2aec8e3cbc3a4f123141d08a *man/gplotTwoWay.Rd
+17b0c15bef090dd1b695ff6135c5d56e *man/homogtestTwoWay.Rd
+b8f2faa8a4b91b6e89dae51d2166c172 *man/nortestTwoWay.Rd
+a81e8991f8d425949f6effab7d20076d *man/twowaytests.Rd
