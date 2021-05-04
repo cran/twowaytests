@@ -10,8 +10,10 @@ descTwoWay<-function(formula, data)
   InterFacAFacB <- paste(y,"~",FacB, sep = "")
 
   if (!is.data.frame(data)) stop("Data must be in data.frame class.")
-  
   if(length(Factors)!=2) stop("Please correct the RHS of the formula. Formula must include two factors.")
+  if(!is.factor(data[,colnames(data)==FacA])) stop(paste(FacA, "must be a factor."))
+  if(!is.factor(data[,colnames(data)==FacB])) stop(paste(FacB, "must be a factor."))
+  if(!is.numeric(data[,colnames(data)==y])) stop(paste(y, "must be a numeric."))
   
   FacA_levels <- levels(data[,colnames(data)==FacA])
   
