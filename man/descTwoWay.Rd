@@ -5,7 +5,7 @@
 Descriptive Statistics for Two-Way Layout
 }
 \description{
-\code{descTwoWay} produces basic descritive statistics including sample size, mean, standard deviation, median, minimum value, maximum value, 25th quantile, 75th quantile, skewness, kurtosis, the number of missing value for two-way layout.
+\code{descTwoWay} produces basic descriptive statistics including sample size, mean, standard deviation, median, minimum value, maximum value, 25th quantile, 75th quantile, skewness, kurtosis, the number of missing value for two-way layout.
 }
 
 \usage{descTwoWay(formula, data)}
@@ -13,7 +13,7 @@ Descriptive Statistics for Two-Way Layout
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs} gives the sample values and \code{rhs} gives two factors.}
-  \item{data}{a data frame containing the variables in the formula \code{formula}} 
+  \item{data}{a data frame containing the variables in \code{formula}.} 
 }
 
 %\details{
@@ -38,7 +38,7 @@ Osman Dag, Sam Weerahandi, Malwane Ananda
 
 library(twowaytests)
 data(alveolar)
-descTwoWay(count ~ ovalbumin*treatment, data = alveolar)
+descTwoWay(cell ~ ovalbumin*treatment, data = alveolar)
 }
 
 \keyword{functions}

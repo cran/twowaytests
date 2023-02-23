@@ -13,7 +13,7 @@ Alveolar cell count data were collected by Lacroix et al. (2002).
   \describe{
     \item{\code{ovalbumin}}{a factor with levels: no (ovalbumin-nonsensitized); yes (ovalbumin-sensitized)}
     \item{\code{treatment}}{a factor with levels: acetaldehyde; air; benzaldehyde}
-    \item{\code{count}}{Alveolar count x 10^6}
+    \item{\code{cell}}{Alveolar count x 10^6}
   }
 }
 %%  \details{

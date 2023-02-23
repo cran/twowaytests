@@ -1,12 +1,8 @@
-#nortestTwoWay <- function(formula, data, method = c("SW", "SF", "LT", "AD", "CVM", "PT"), 
-#                          alpha = 0.05, plot = c("qqplot", "histogram"), 
-#                          mfrow = NULL, na.rm = TRUE, verbose = TRUE){ 
-
 nortestTwoWay <- function(formula, data, method = c("SW", "SF", "LT", "AD", "CVM", "PT"), 
                           alpha = 0.05, plot = c("qqplot", "histogram"), 
                           na.rm = TRUE, verbose = TRUE){ 
-
-
+  
+  
   data <- model.frame(formula, data)
   fml <-as.character(formula)
   ftmp <- strsplit(fml,"~")
@@ -55,7 +51,7 @@ nortestTwoWay <- function(formula, data, method = c("SW", "SF", "LT", "AD", "CVM
     }
     method.name = "Shapiro-Wilk Normality Test"
   }
-
+  
   if (method == "SF") {
     for (i in FacA_levels) {
       kk <- tapply(y_vector[FacA_vector==i], FacB_vector[FacA_vector==i], sf.test)
@@ -120,18 +116,18 @@ nortestTwoWay <- function(formula, data, method = c("SW", "SF", "LT", "AD", "CVM
   colnames(store) = c(dname2, dname3, "Statistic", "p.value", "  Normality")
   
   formula.text<-
-  
-  if (verbose) {
-    cat("\n", "",method.name, paste("(alpha = ",alpha,")",sep = ""), "\n", sep = " ")
-    cat("==============================================================================", 
-        "\n", sep = " ")
-    formula.text<-format(formula)
-    cat("  formula :", formula.text, "\n\n", sep = " ")
     
-    print(store)
-    cat("==============================================================================", 
-        "\n\n", sep = " ")
-  }
+    if (verbose) {
+      cat("\n", "",method.name, paste("(alpha = ",alpha,")",sep = ""), "\n", sep = " ")
+      cat("------------------------------------------------------------------------------", 
+          "\n", sep = " ")
+      formula.text<-format(formula)
+      cat("  formula :", formula.text, "\n\n", sep = " ")
+      
+      print(store)
+      cat("------------------------------------------------------------------------------", 
+          "\n\n", sep = " ")
+    }
   
   
   
@@ -144,24 +140,24 @@ nortestTwoWay <- function(formula, data, method = c("SW", "SF", "LT", "AD", "CVM
       
       for (i in 1:length(FacA_levels)) {
         for (j in 1:length(FacB_levels)){
-        qqnorm(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))], main = paste(FacA_levels[i], "&", FacB_levels[j]))
-        qqline(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))])
+          qqnorm(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))], main = paste(FacA_levels[i], "&", FacB_levels[j]))
+          qqline(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))])
         }}
-      }
+    }
     
     
     if (plot == "histogram") {
       
-
+      
       for (i in 1:length(FacA_levels)) {
         for (j in 1:length(FacB_levels)){
-        hist(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))], xlab = paste(FacA_levels[i], "&", FacB_levels[j]), freq = FALSE, main = NULL)
-        x<-NULL
-        rm(x)
-        curve(dnorm(x, mean = mean(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))]), sd = sd(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))])), col = "red", add = TRUE)
-      }}
-  }
-  
+          hist(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))], xlab = paste(FacA_levels[i], "&", FacB_levels[j]), freq = FALSE, main = NULL)
+          x<-NULL
+          rm(x)
+          curve(dnorm(x, mean = mean(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))]), sd = sd(y_vector[which(FacA_vector == (FacA_levels[i]) & FacB_vector == (FacB_levels[j]))])), col = "red", add = TRUE)
+        }}
+    }
+    
   }
   
   invisible(store) 

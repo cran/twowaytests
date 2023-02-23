@@ -2,7 +2,7 @@
 \alias{homogtestTwoWay}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Variance Homogeneity Tests for for Two-Way Layout
+Variance Homogeneity Tests for Two-Way Layout
 }
 \description{
 \code{homogtestTwoWay} performs variance homogeneity tests including Levene, Bartlett, Fligner-Killeen tests for two-way layout.
@@ -14,7 +14,7 @@ Variance Homogeneity Tests for for Two-Way Layout
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs} gives the sample values and \code{rhs} the corresponding two factors.}
-  \item{data}{a data frame containing the variables in the formula \code{formula}} 
+  \item{data}{a data frame containing the variables in \code{formula}} 
   \item{method}{a character string to select one of the variance homogeneity tests. "Levene": Levene's test, "Bartlett": Bartlett's test, "Fligner": Fligner-Killeen test.} 
   \item{alpha}{the level of significance to assess variance homogenity. Default is set to alpha = 0.05.}
   \item{na.rm}{a logical value indicating whether NA values should be stripped before the computation proceeds.}
@@ -52,8 +52,8 @@ Osman Dag, Malwane Ananda, Sam Weerahandi
 library(twowaytests)
 data(alveolar)
 
-homogtestTwoWay(count ~ ovalbumin*treatment, data = alveolar)
-homogtestTwoWay(count ~ ovalbumin*treatment, data = alveolar, method = "Bartlett")
+homogtestTwoWay(cell ~ ovalbumin*treatment, data = alveolar)
+homogtestTwoWay(cell ~ ovalbumin*treatment, data = alveolar, method = "Bartlett")
 
 }
 

@@ -1,7 +1,7 @@
 ###############################################################################
 ###############################################################################
-gpTwoWay<-function(formula, data, method = c("gPB","gPQ"), alpha = 0.05, na.rm = TRUE, verbose = TRUE) 
-{
+gpTwoWay<-function(formula, data, method = c("gPB","gPQ"), seed = 123, alpha = 0.05, na.rm = TRUE, verbose = TRUE) {
+  set.seed(seed)
   data <- model.frame(formula, data)
   fml <-as.character(formula)
   ftmp <- strsplit(fml,"~")
@@ -58,7 +58,7 @@ gpTwoWay<-function(formula, data, method = c("gPB","gPQ"), alpha = 0.05, na.rm =
   }
   colnames(XBij)=colnames(S2ij)=colnames(Nij)<- Bs
   rownames(XBij)=rownames(S2ij)=rownames(Nij)<- As 
-
+  
   ### ******************* Pval code below read data column wise, and so transpose; Sample size is a vector 
   
   # Compute p-values for interaction effect 
@@ -80,7 +80,7 @@ gpTwoWay<-function(formula, data, method = c("gPB","gPQ"), alpha = 0.05, na.rm =
   TobsA = AInterSumSqMat(Nij,XBij,S2ij) 
   if (method=="gPB") {
     pval.FacA=FacApvalGPB(Nij, XBij,S2ij,TobsA, nM, method="gPB") 
-   }else {
+  }else {
     pval.FacA=FacApvalGPB(Nij, XBij,S2ij,TobsA, nM, method="gPQ")     
   }
   #print(pval.FacA)
@@ -101,41 +101,41 @@ gpTwoWay<-function(formula, data, method = c("gPB","gPQ"), alpha = 0.05, na.rm =
   store$X1 = c(FacA, FacB, InterFacAFacB)
   store$X2 = c(pval.FacA,pval.FacB, pval.Int)
   store$X3 = ifelse(store$X2 > alpha, "Not reject", "Reject")
-  colnames(store) = c("Factor", "  P-value", "  Result")
+  colnames(store) = c("Factor", "P_value", "Result")
   
   store4<-store
   
   if (verbose){
-
-  ncharacter <- matrix(NA,dim(store4)[1],dim(store4)[2])
-  for (i in 1:dim(store4)[1]){
     
-    for (j in 1:dim(store4)[2]){
+    ncharacter <- matrix(NA,dim(store4)[1],dim(store4)[2])
+    for (i in 1:dim(store4)[1]){
       
-      ncharacter[i,j] <- nchar(toString((store4[i,j])))
+      for (j in 1:dim(store4)[2]){
+        
+        ncharacter[i,j] <- nchar(toString((store4[i,j])))
+        
+      }
       
     }
+    maxentry <- sum(apply(ncharacter, MARGIN = 2, function(x) max(x, na.rm=TRUE)))
+    if (maxentry<25) maxentry <- 25
     
-  }
-  maxentry <- sum(apply(ncharacter, MARGIN = 2, function(x) max(x, na.rm=TRUE)))
-  if (maxentry<25) maxentry <- 25
-  
-  if (method == "gPB"){
+    if (method == "gPB"){
+      
+      line<-paste(c("  ",method.name, " (alpha = ",alpha,")"),sep = "")
+      line2<-paste(c(rep("-",round((maxentry+10-32)/2,0)),rep("-",42),rep("-",round((maxentry+10-32)/2,0))),sep = "")
+      
+      
+    }else if (method == "gPQ"){
+      line<-paste(c("  ",method.name, " (alpha = ",alpha,")"),sep = "")
+      line2<-paste(c(rep("-",round((maxentry+10-33)/2,0)),rep("-",42),rep("-",round((maxentry+10-33)/2,0))),sep = "")
+      
+    }else stop("Please correct the method argument.")
     
-    line<-paste(c("  ",method.name, " (alpha = ",alpha,")"),sep = "")
-    line2<-paste(c(rep("=",round((maxentry+10-32)/2,0)),rep("=",40),rep("=",round((maxentry+10-32)/2,0))),sep = "")
-    
-    
-  }else if (method == "gPQ"){
-    line<-paste(c("  ",method.name, " (alpha = ",alpha,")"),sep = "")
-    line2<-paste(c(rep("=",round((maxentry+10-33)/2,0)),rep("=",40),rep("=",round((maxentry+10-33)/2,0))),sep = "")
-    
-  }else stop("Please correct the method argument.")
-  
-  cat("\n",line,sep = "")
-  cat("\n",line2,sep = "","\n")
-  print(store4,row.names = FALSE)
-  cat(line2,sep = "","\n\n")
+    cat("\n",line,sep = "")
+    cat("\n",line2,sep = "","\n")
+    print(store4,row.names = FALSE)
+    cat(line2,sep = "","\n\n")
   }
   
   result <- list()
@@ -145,6 +145,7 @@ gpTwoWay<-function(formula, data, method = c("gPB","gPQ"), alpha = 0.05, na.rm =
   result$method <- method.name
   result$data <- data
   result$formula <- formula
+  attr(result, "class") <- "twt"
   invisible(result)
   
 }
@@ -415,6 +416,3 @@ FacBpvalGPB=function(nij, Xobs, S2obs, Tobs, M=1000,method="gPB")
 }
 ###############################################################################
 ###############################################################################
-
-
-
