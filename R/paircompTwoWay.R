@@ -86,7 +86,7 @@ paircompTwoWay.twt <- function(x, adjust.method = c("bonferroni", "holm", "hochb
       store_ab[store_ab$X1==m,]$X4<-p.adjust(store_ab[store_ab$X1==m,]$X4,method=adjust.method)
     }
     store_ab$X5 = ifelse(store_ab$X4 <= alpha, "Reject", "Not reject")
-    colnames(store_ab) = c("Factor1", "Factor2(a)","Factor2(b)", "p.value", "  No difference")
+    colnames(store_ab) = c(group1_name, paste(group2_name,"(a)",sep = ""),paste(group2_name,"(b)",sep = ""), "P_value", "  No difference")
     
     if (verbose==TRUE){
       cat("\n", "",method.name,"for subgroups of each",group1_name,"level", "\n", sep = " ")
@@ -115,7 +115,7 @@ paircompTwoWay.twt <- function(x, adjust.method = c("bonferroni", "holm", "hochb
       store_a$X2=comb_a[,2]
       store_a$X3 = padj_a
       store_a$X4 = ifelse(store_a$X3 <= alpha, "Reject", "Not reject")
-      colnames(store_a) = c("Level (a)", "Level (b)", "p.value", "  No difference")
+      colnames(store_a) = c("Level (a)", "Level (b)", "P_value", "  No difference")
       
       if (verbose==TRUE){
         cat("\n", "",method.name,"for",group1_name, "\n", sep = " ")

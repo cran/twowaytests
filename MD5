@@ -1,4 +1,4 @@
-c79e6cab00ad9f2f387fec0b482f833a *DESCRIPTION
+f3b88a8c8f351d59749f04457d0647da *DESCRIPTION
 5db234f1bb788187d2c980809574d65d *NAMESPACE
 288ce036411568250be66307114441ba *R/MestTwoWay.R
 84106e15600f71f415d382c03ee1e3d1 *R/aovTwoWay.R
@@ -16,7 +16,7 @@ cfbdc1db66feb95b69ae765f2fff0d92 *R/nortestTwoWay.R
 d863cc62c3608f08b2813f1dc452f3ce *R/onestep_est.R
 fbca29b1fb5882cb21f6a16cd7dbd766 *R/optimalf.R
 adbcddc77e28ca14d150aaaa67fe8248 *R/p_value_fon.R
-4bb1765d9b8159328930ab1f1c40090e *R/paircompTwoWay.R
+fd38853f4e1542b57df98982cec45bee *R/paircompTwoWay.R
 32324bc58c9d9d42d83a47dc987b4b88 *R/projected_dist.R
 7bce53bdd1a3eef44e078a4abe5e0dc8 *R/tmeanTwoWay.R
 fa6c5a4925e31a94aa1c1e9cdec43bfd *R/winsorvar.R
