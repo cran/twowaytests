@@ -101,7 +101,7 @@ gpTwoWay<-function(formula, data, method = c("gPB","gPQ"), seed = 123, alpha = 0
   store$X1 = c(FacA, FacB, InterFacAFacB)
   store$X2 = c(pval.FacA,pval.FacB, pval.Int)
   store$X3 = ifelse(store$X2 > alpha, "Not reject", "Reject")
-  colnames(store) = c("Factor", "P_value", "Result")
+  colnames(store) = c("Factor", "P.value", "Result")
   
   store4<-store
   

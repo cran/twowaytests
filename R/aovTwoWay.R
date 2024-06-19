@@ -59,7 +59,7 @@ aovTwoWay<-function(formula, data, alpha = 0.05, na.rm = TRUE, verbose = TRUE){
   ffactor<-msfactor/mserror
   finteract<-msinteract/mserror
   store<-data.frame(matrix(NA,nrow=4,ncol =7))
-  colnames(store)<-c("Factor","data","SS","MS","F","P_value","Result")
+  colnames(store)<-c("Factor","data","SS","MS","F","P.value","Result")
   store$Factor<-c(FacA,FacB,InterFacAFacB,"Residuals")
   store$data<-c(J-1,K-1,(J-1)*(K-1),n-p)
   store$SS<-c(sssample,ssfactor,ssinteract,sserror)
@@ -69,7 +69,7 @@ aovTwoWay<-function(formula, data, alpha = 0.05, na.rm = TRUE, verbose = TRUE){
              round(pf(ffactor,K-1,n-((J)*(K)),lower.tail = FALSE),digits=7),
              round(pf(finteract,((J-1)*(K-1)),n-((J)*(K)),lower.tail = FALSE),digits=7))
   Result<-c(ifelse(P_value>alpha,"Not reject","Reject"))
-  store$P_value<-c(P_value,"")
+  store$P.value<-c(P_value,"")
   store$Result<-c(Result,"")
   if(verbose){
     cat("\n","  Two-way ANOVA ","(alpha = ",alpha,")",sep="")

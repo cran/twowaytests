@@ -1,5 +1,6 @@
-MestTwoWay <- function(formula, data, estimator=c("mom_est", "onestep_est", "median"), nboot = 500, distance = c("mahalanobis", "projected"), seed = 123, alpha = 0.05, na.rm = TRUE, verbose = TRUE){
+MestTwoWay <- function(formula, data, estimator=c("mom_est", "onestep_est", "median","bisquare","hampel"), nboot = 500, distance = c("mahalanobis", "projected"), seed = 123, alpha = 0.05, na.rm = TRUE, verbose = TRUE){
   set.seed(seed)
+  if(exists("estimator")==FALSE) estimator<-"mom_est"
   data <- model.frame(formula, data)
   fml <- as.character(formula)
   ftmp <- strsplit(fml, "~")
@@ -29,14 +30,18 @@ MestTwoWay <- function(formula, data, estimator=c("mom_est", "onestep_est", "med
   estimator=match.arg(estimator)
   distance=match.arg(distance)
   if(estimator=="mom_est"){
-    estimator=mom_est
-    method.name<-"Two-way ANOVA for Modified One-step M-estimators "
+    estimator_new=mom_est
+    method.name<-"Two-way ANOVA for Modified One-step M-estimator"
   }else if(estimator=="onestep_est"){
-    estimator=onestep_est
-    method.name<-"Two-way ANOVA for One-step M-estimators "
+    estimator_new=onestep_est
+    method.name<-"Two-way ANOVA for One-step M-estimator"
+  }else if(estimator=="hampel"){
+    method.name<-"Two-way ANOVA for Hampel's M-estimator"
+  }else if(estimator=="bisquare"){
+    method.name<-"Two-way ANOVA for Tukey's Biweight (Bisquare) M-estimator"
   }else{
-    estimator=median
-    method.name<-"Two-way ANOVA for Medians "
+    estimator_new=median
+    method.name<-"Two-way ANOVA for Median"
   }
   J<-nlevels(data[,FacA])
   K<-nlevels(data[,FacB])
@@ -49,7 +54,16 @@ MestTwoWay <- function(formula, data, estimator=c("mom_est", "onestep_est", "med
   length_x<-list()
   estimates<-list()
   for (i in 1:length(data_x)) {
-    estimates<-append(estimates,estimator(data_x[[i]]))
+    if(estimator=="hampel"){
+      model <- rlm(data_x[[i]] ~ 1, psi = psi.hampel, maxit = 200)
+      estimation<-coef(model)[1]
+    }else if(estimator=="bisquare"){
+      model <- rlm(data_x[[i]] ~ 1, psi = psi.bisquare, maxit = 200)
+      estimation<-coef(model)[1]
+    }else{
+      estimation<-estimator_new(data_x[[i]])
+    }
+    estimates<-append(estimates,estimation)
     length_x<-append(length_x,length(data_x[[i]]))
   }
   estimates<-unlist(estimates)
@@ -57,7 +71,20 @@ MestTwoWay <- function(formula, data, estimator=c("mom_est", "onestep_est", "med
   boot_matrix<- matrix(NA, nrow = p, ncol = nboot)
   for (j in 1:p) {
     sample_data <- matrix(sample(data_x[[j]], size =nboot*length(data_x[[j]]), replace = TRUE), nrow = nboot)
-    boot_matrix[j, ] <- apply(sample_data, 1, estimator)
+    if(estimator=="bisquare"){
+      boot_matrix[j, ] <-apply(sample_data, 1, function(row){
+        model_psi<-rlm(row~1, psi = psi.bisquare, maxit = 200)
+        coef(model_psi)[1]
+      })
+    }else if(estimator=="hampel"){
+      boot_matrix[j, ] <-apply(sample_data, 1, function(row){
+        model_psi<-rlm(row~1, psi = psi.hampel, maxit = 200)
+        coef(model_psi)[1]
+      })
+    }else{
+      boot_matrix[j, ] <- apply(sample_data, 1, estimator_new)
+    }
+    
     if (sum(is.na(boot_matrix[j,])) > 0) 
       boot_matrix[j, ][which(is.na(boot_matrix[j,]))] <- mean(boot_matrix[j, ], na.rm = TRUE)
   }
@@ -95,16 +122,16 @@ MestTwoWay <- function(formula, data, estimator=c("mom_est", "onestep_est", "med
   }
   p.val_InterFacAFacB <- 1 - sum(dist_matrix[nboot+1] >= dist_matrix[1:nboot])/nboot
   store<-data.frame(matrix(NA,nrow=3,ncol = 3))
-  colnames(store)<-c("Factor","P_value","Result")
+  colnames(store)<-c("Factor","P.value","Result")
   store$Factor<-c(FacA,FacB,InterFacAFacB)
-  store$P_value<-c(p.val_FacA,p.val_FacB,p.val_InterFacAFacB)
-  store$Result<-ifelse(store$P_value>alpha,"Not reject","Reject")
+  store$P.value<-c(p.val_FacA,p.val_FacB,p.val_InterFacAFacB)
+  store$Result<-ifelse(store$P.value>alpha,"Not reject","Reject")
   store4<-store
   if(verbose){
     cat("\n","  ",method.name," ","(alpha = ",alpha,")",sep="")
-    cat("\n", "--------------------------------------------------------------------", sep = "","\n")
+    cat("\n", "----------------------------------------------------------------------------", sep = "","\n")
     print(store4, row.names = FALSE)
-    cat("--------------------------------------------------------------------", sep = "", "\n")
+    cat("----------------------------------------------------------------------------", sep = "", "\n")
   }
   
   result<-list()

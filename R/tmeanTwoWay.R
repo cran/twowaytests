@@ -72,14 +72,14 @@ tmeanTwoWay<-function(formula, data, tr = 0.1, alpha = 0.05, na.rm = TRUE, verbo
   }
   p.val_InterFacAFacB<-seda/1000
   store<-data.frame(matrix(NA,nrow=3,ncol = 4))
-  colnames(store)<-c("Factor","Statistic","P_value","Result")
+  colnames(store)<-c("Factor","Statistic","P.value","Result")
   store$Factor<-c(FacA,FacB,InterFacAFacB)
   store$Statistic<-c(FacA_value,FacB_value,InterFacAFacB_value)
-  store$P_value<-c(p.val_FacA,p.val_FacB,p.val_InterFacAFacB)
-  store$Result<-ifelse(store$P_value>alpha,"Not reject","Reject")
+  store$P.value<-c(p.val_FacA,p.val_FacB,p.val_InterFacAFacB)
+  store$Result<-ifelse(store$P.value>alpha,"Not reject","Reject")
   store4<-store
   if(verbose){
-    cat("\n","  Two-way ANOVA for Trimmed Means ","(alpha = ",alpha,")",sep="")
+    cat("\n","  Two-way ANOVA for Trimmed Mean ","(alpha = ",alpha,")",sep="")
     cat("\n", "---------------------------------------------------------------------------", sep = "","\n")
     print(store4, row.names = FALSE)
     cat("---------------------------------------------------------------------------", sep = "", "\n")

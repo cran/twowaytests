@@ -3,8 +3,6 @@ paircompTwoWay <- function(x, ...) UseMethod("paircompTwoWay")
 paircompTwoWay.default <- function(x, ...)paircompTwoWay.twt(x, ...)
 
 
-
-
 paircompTwoWay.twt <- function(x, adjust.method = c("bonferroni", "holm", "hochberg", "hommel", "BH", 
                                                     "BY", "fdr", "none"), verbose = TRUE, ...){
   data<-x$data
@@ -20,24 +18,44 @@ paircompTwoWay.twt <- function(x, adjust.method = c("bonferroni", "holm", "hochb
   comb_b<-t(combn(id_b,2))
   comb2_b<-dim(comb_b)[1]
   
-  if(x$method=="Two-way ANOVA for Modified One-step M-estimators "){
+  if(x$method=="Two-way ANOVA for Modified One-step M-estimator"){
     method_num<-1
     analysis<-MestTwoWay
     mest_est<-"mom_est"
   } 
-  if(x$method=="Two-way ANOVA for One-step M-estimators "){
+  if(x$method=="Two-way ANOVA for One-step M-estimator"){
     method_num<-1
     analysis<-MestTwoWay
     mest_est<-"onestep_est"
   }
-  if(x$method=="Two-way ANOVA for Medians "){
+  if(x$method=="Two-way ANOVA for Median"){
     method_num<-1
     analysis<-MestTwoWay
     mest_est<-"median"
+    
   }
-  if(x$method=="Two-way ANOVA") analysis<-aovTwoWay; method_num<-3
-  if(x$method=="Two-way ANOVA for medians") analysis<-medTwoWay; method_num<-3
-  if(x$method=="Two-way ANOVA for Trimmed Means") analysis<-tmeanTwoWay; method_num<-3
+  if(x$method=="Two-way ANOVA for Hampel's M-estimator"){
+    method_num<-1
+    analysis<-MestTwoWay
+    mest_est<-"hampel"
+  }
+  if(x$method=="Two-way ANOVA for Tukey's Biweight (Bisquare) M-estimator"){
+    method_num<-1
+    analysis<-MestTwoWay
+    mest_est<-"bisquare"
+  }
+  if(x$method=="Two-way ANOVA"){
+    analysis<-aovTwoWay
+    method_num<-3
+  } 
+  if(x$method=="Two-way ANOVA for medians"){
+    analysis<-medTwoWay
+    method_num<-3
+  } 
+  if(x$method=="Two-way ANOVA for Trimmed Means"){
+    analysis<-tmeanTwoWay
+    method_num<-3
+  } 
   if(x$method=="Generalized p-value by PB method"){
     method_num<-2
     analysis<-gpTwoWay
@@ -86,7 +104,7 @@ paircompTwoWay.twt <- function(x, adjust.method = c("bonferroni", "holm", "hochb
       store_ab[store_ab$X1==m,]$X4<-p.adjust(store_ab[store_ab$X1==m,]$X4,method=adjust.method)
     }
     store_ab$X5 = ifelse(store_ab$X4 <= alpha, "Reject", "Not reject")
-    colnames(store_ab) = c(group1_name, paste(group2_name,"(a)",sep = ""),paste(group2_name,"(b)",sep = ""), "P_value", "  No difference")
+    colnames(store_ab) = c(group1_name, paste(group2_name,"(a)",sep = ""),paste(group2_name,"(b)",sep = ""), "P.value", "  No difference")
     
     if (verbose==TRUE){
       cat("\n", "",method.name,"for subgroups of each",group1_name,"level", "\n", sep = " ")
@@ -106,7 +124,7 @@ paircompTwoWay.twt <- function(x, adjust.method = c("bonferroni", "holm", "hochb
         }else{
           analysis_<-analysis(x$formula,data_sub,verbose = FALSE)
         }
-        pval_a<-c(pval_a,analysis_$output[1,"P_value"])
+        pval_a<-c(pval_a,analysis_$output[1,"P.value"])
       }
       padj_a <- p.adjust(pval_a, method = adjust.method)
       store_a = data.frame(matrix(NA, nrow = comb2_a, ncol = 4))
@@ -115,7 +133,7 @@ paircompTwoWay.twt <- function(x, adjust.method = c("bonferroni", "holm", "hochb
       store_a$X2=comb_a[,2]
       store_a$X3 = padj_a
       store_a$X4 = ifelse(store_a$X3 <= alpha, "Reject", "Not reject")
-      colnames(store_a) = c("Level (a)", "Level (b)", "P_value", "  No difference")
+      colnames(store_a) = c("Level (a)", "Level (b)", "P.value", "  No difference")
       
       if (verbose==TRUE){
         cat("\n", "",method.name,"for",group1_name, "\n", sep = " ")

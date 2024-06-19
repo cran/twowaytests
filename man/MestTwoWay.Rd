@@ -8,15 +8,15 @@ Two-Way ANOVA for M-estimators
 \code{MestTwoWay} computes a two-way ANOVA for M-estimators.
 }
 
-\usage{MestTwoWay(formula, data, estimator = c("mom_est", "onestep_est", "median"), 
-  nboot = 500, distance = c("mahalanobis", "projected"), seed = 123, alpha = 0.05, 
-  na.rm = TRUE, verbose = TRUE)}
+\usage{MestTwoWay(formula, data, estimator = c("mom_est", "onestep_est", "median",
+  "bisquare", "hampel"), nboot = 500, distance = c("mahalanobis", "projected"), 
+  seed = 123, alpha = 0.05, na.rm = TRUE, verbose = TRUE)}
 
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs} gives the sample values and \code{rhs} gives the two factors.}
   \item{data}{a data frame containing the variables in \code{formula}.} 
-  \item{estimator}{a character string to select one of the estimators. "mom_est": the modified one-step estimator of location based on Huber's Psi, "onestep_est": one-step estimator of location using Huber's Psi, "median": median.}
+  \item{estimator}{a character string to select one of the estimators. "mom_est": the modified one-step estimator of location based on Huber's Psi, "onestep_est": one-step estimator of location using Huber's Psi, "median": median, "bisquare": Tukey's biweight (bisquare) estimator, "hampel": Hampel's estimator.}
   \item{nboot}{the number of bootstrap samples.}
   \item{distance}{the specified distance. Default is set to "mahalanobis".}
   \item{seed}{a seed number for the reproducibility of results. Default is set to 123.}

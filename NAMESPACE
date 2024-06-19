@@ -1,13 +1,16 @@
 export(gpTwoWay, descTwoWay, gplotTwoWay, nortestTwoWay, homogtestTwoWay, aovTwoWay, medTwoWay, tmeanTwoWay, MestTwoWay, paircompTwoWay)
 S3method(paircompTwoWay, default)
 S3method(paircompTwoWay, twt)
-importFrom("stats", complete.cases, model.frame, rchisq, rnorm, rt, var, as.formula, shapiro.test, dnorm, qqline, qqnorm, sd, bartlett.test, fligner.test, mad, median, qchisq, qnorm, pf, pchisq, mahalanobis, p.adjust)
+importFrom("stats", complete.cases, model.frame, rchisq, rnorm, rt, var, as.formula, shapiro.test, dnorm, qqline, qqnorm, sd, bartlett.test, fligner.test, mad, median, qchisq, qnorm, pf, pchisq, mahalanobis, coef, p.adjust)
 importFrom("onewaytests", describe, st.test, wt.test, mw.test)
-importFrom("ggplot2", ggplot, aes, geom_boxplot, geom_point, geom_errorbar, ggtitle, labs, geom_bar, position_dodge, geom_violin, theme_bw, scale_fill_manual)
+importFrom("ggplot2", ggplot, aes, geom_boxplot, geom_line, geom_point, geom_errorbar, ggtitle, labs, geom_bar, position_dodge, geom_violin, theme_bw, scale_fill_manual, scale_color_manual)
 importFrom("nortest", sf.test, pearson.test, ad.test, cvm.test, lillie.test)
 importFrom("graphics", curve, hist, par)
 importFrom("car", leveneTest)
 importFrom("wesanderson", wes_palette)
 importFrom("utils", combn)
+importFrom("MASS", psi.bisquare, psi.hampel, rlm)
+
+
 
 

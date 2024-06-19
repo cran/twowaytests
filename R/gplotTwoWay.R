@@ -1,7 +1,6 @@
-
-gplotTwoWay<- function(formula, data, type = c("errorbar", "violin", "boxplot"), color_manual = NULL, back_color = FALSE, xlab = NULL,
-                       ylab = NULL, title = NULL, legend.title = NULL, width = NULL,
-                       option = c("sd", "se"), na.rm = TRUE){
+gplotTwoWay<- function(formula, data, type = c("errorbar", "violin", "boxplot", "interaction"), color_manual = NULL, back_color = FALSE, xlab = NULL,
+                              ylab = NULL, title = NULL, legend.title = NULL, width = NULL,
+                              option = c("sd", "se"), metric = c("mean", "median"), na.rm = TRUE){
   data <- model.frame(formula, data)
   fml <- as.character(formula)
   ftmp <- strsplit(fml, "~")
@@ -62,10 +61,33 @@ gplotTwoWay<- function(formula, data, type = c("errorbar", "violin", "boxplot"),
       geom_bar(stat = "identity", color = "black", position = position_dodge(),size=1) + 
       geom_errorbar(aes(ymin =mean, ymax = mean + 
                           dev), width = width, size = 0.8, position = position_dodge(0.9))
-  }else{
+  }else if(type == "violin"){
     out <- ggplot(data, aes(x = FacA_vector, y = y_vector, 
                             fill = FacB_vector))+ geom_violin(width = width)
+  }else {
+    metric = match.arg(metric)
+	
+	colnames(data) <- c(y, FacA, FacB)
+    result <- descTwoWay(formula = formula, data = data)
+	  
+	df2 <- data.frame(matrix(0, dim(result)[1], 3))
+    colnames(df2) <- c("Extremity", "dose", "mean")
+	df2$Extremity <- result[, 1]
+    df2$dose <- result[, 2]
+	
+    if(metric == "mean"){
+      df2$mean <- result[, 4]
+	  }else{
+	  df2$mean <- result[, 6]
+	  }
+      
+      out <- ggplot(data=df2,
+        aes(x = Extremity, y = mean, group = dose)) + 
+        geom_line() + geom_point(aes(color = dose),size=5) + labs(color = FacB)
+
   }
+  
+  
   if(back_color==FALSE){
     out<-out+ theme_bw()
   }
@@ -74,7 +96,7 @@ gplotTwoWay<- function(formula, data, type = c("errorbar", "violin", "boxplot"),
   }else{
     a = color_manual
   }
-    out <- out+ scale_fill_manual(values=a)
+  out <- out+ scale_fill_manual(values=a)+scale_color_manual(values=a)
   if (is.null(ylab)) 
     y.name <- dname1
   else y.name <- ylab
@@ -91,3 +113,5 @@ gplotTwoWay<- function(formula, data, type = c("errorbar", "violin", "boxplot"),
                     fill = legend.title)
   return(out)
 }
+
+
