@@ -1,0 +1,20 @@
+citHeader("To cite twowaytests in publications use:")
+
+bibentry(bibtype = "Article",
+  title        = "twowaytests: An R Package for Two-Way Tests in Independent Groups Designs",
+  author       = c(person(given = "Osman", family = "Dag"),
+                   person(given = "Merve", family = "Kasikci"),
+                   person(given = "Muhammed Ali", family = "Yilmaz"),
+                   person(given = "Samaradasa", family = "Weerahandi"),
+                   person(given = "Malwane M.A.", family = "Ananda")),
+  journal      = "SoftwareX",
+  year         = "2024",
+  volume       = "27",
+  pages        = "1--8",
+  doi          = "10.1016/j.softx.2024.101862"
+)
+
+
+
+
+

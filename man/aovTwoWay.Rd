@@ -40,6 +40,8 @@ A list containing the following components:
 }
 
 \references{
+Dag, O., Kasikci, M., Yilmaz, M.A., Weerahandi, S., Ananda, M.M.A. (2024). twowaytests: An R Package for Two-Way Tests in Independent Groups Designs. \emph{SoftwareX}, \bold{27}, 1-8.
+
 Toutenburg, H., Shalabh, S., Shalabh, H. (2002). Statistical analysis of designed experiments. Springer.
 }
 

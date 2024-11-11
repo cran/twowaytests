@@ -45,7 +45,13 @@ A list containing the following components:
 
 \references{
 
-Ananda, M.M., Dag, O., Weerahandi, S. (2022). Heteroscedastic two-way ANOVA under constraints. \emph{Communications in Statistics-Theory and Methods}, 1-16.
+Dag, O., Kasikci, M., Yilmaz, M.A., Weerahandi, S., Ananda, M.M.A. (2024). twowaytests: An R Package for Two-Way Tests in Independent Groups Designs. \emph{SoftwareX}, \bold{27}, 1-8.
+
+Ananda, M.M., Dag, O., Weerahandi, S. (2023). Heteroscedastic two-way ANOVA under constraints. \emph{Communications in Statistics-Theory and Methods}, \bold{52:22}, 8207-8222.
+
+Li, X., Wang J., Liang H. (2011). Comparison of several means: a fiducial based approach. \emph{Computational Statistics and Data Analysis}, \bold{55:5}, 1993-2002.
+
+Xu L., Yang F., Abula A., Qin, S. (2013). A parametric bootstrap approach for two-way ANOVA in presence of possible interactions with unequal variances. \emph{Journal of Multivariate Analysis}, \bold{115}, 172-180.
 
 }
 
@@ -56,9 +62,6 @@ Sam Weerahandi, Osman Dag, Malwane Ananda
 
 
 \examples{
-
-
-###Example 1
 
 library(twowaytests)
 data(alveolar)

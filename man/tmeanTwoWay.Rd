@@ -42,6 +42,8 @@ A list containing the following components:
 
 \references{
 
+Dag, O., Kasikci, M., Yilmaz, M.A., Weerahandi, S., Ananda, M.M.A. (2024). twowaytests: An R Package for Two-Way Tests in Independent Groups Designs. \emph{SoftwareX}, \bold{27}, 1-8.
+
 Wilcox, R.R. (2011). Introduction to robust estimation and hypothesis testing. Academic press.
 
 }

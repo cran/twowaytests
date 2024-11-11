@@ -23,7 +23,6 @@ Alveolar cell count data were collected by Lacroix et al. (2002).
 
 \references{
 
-
 Lacroix, G., Tissot, S., Rogerieux, F., Beaulieu, R., Cornu, L., Gillet, C., ..., Bois, F. Y. (2002). Decrease in ovalbumin-induced pulmonary allergic response by benzaldehyde but not acetaldehyde exposure in a guinea pig model. \emph{Journal of Toxicology and Environmental Health, Part A}, \bold{65:14}, 995-1012.
 
 }
